@@ -1,4 +1,5 @@
 let curves = []; 
+let points = [];
 
 let number_array = [];
 let x_array = [];
@@ -15,6 +16,13 @@ let rotate_offset_array = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+
+  // Generate fixed points
+  for (let i = 0; i < 1000; i++) { // Adjust the number of dots as needed
+    let x = random(width);
+    let y = random(height);
+    points.push({ x: x, y: y });
+  }
 
   //generateCurves(number,x,y,r,g,b,length,rotate ratio,PI);
   generateCurves(12,300,220,144,62,91,45,2,PI); 
@@ -54,13 +62,11 @@ function setup() {
 function draw() {
   background(255, 200, 34);
 
-  // Add black dots to the yellow background
-  for (let i = 0; i < 100; i++) { // Adjust the number of dots as needed
-    let x = random(width);
-    let y = random(height);
-    fill(0);
-    noStroke();
-    ellipse(x, y, 5, 5); // Adjust the size of the dots as needed
+  // Draw fixed black dots
+  fill(0);
+  noStroke();
+  for (let i = 0; i < points.length; i++) {
+    ellipse(points[i].x, points[i].y, 5, 5); // Adjust the size of the dots as needed
   }
   
   for (let i = 0; i < curves.length; i++) {
