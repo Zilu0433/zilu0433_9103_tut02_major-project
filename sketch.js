@@ -13,8 +13,10 @@ function setup() {
 
   //grass
   let L_Scale = windowHeight / 700;
-  grasses.push(generateGrass(12, windowHeight * 0.7 * 300 / 490, windowHeight * 220 / 700, 144, 62, 91, 45 * L_Scale, 2, 3));
-  grasses.push(generateGrass(16, windowHeight * 0.7 * 298 / 490, windowHeight * 217 / 700, 226, 84, 126, 50 * L_Scale, 3, 3));
+  let grass1 = generateGrass(12, windowHeight * 0.7 * 300 / 490, windowHeight * 220 / 700, 144, 62, 91, 45 * L_Scale, 2, 3));
+  let grass2 = generateGrass(16, windowHeight * 0.7 * 298 / 490, windowHeight * 217 / 700, 226, 84, 126, 50 * L_Scale, 3, 3));
+  let combinedGrass = combinedGrass(grass1,grass2);
+  grass1.push(combinedGrass);
 }
 
 function generateRandomPoints(h) {
