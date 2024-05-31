@@ -17,8 +17,8 @@ function setup() {
 
   // grass
   let L_Scale = windowHeight / 700;
-  generateCurves(12, windowHeight * 0.7 * 300 / 490, windowHeight * 220 / 700, 144, 62, 91, 45 * L_Scale, 2, 3);
-  generateCurves(16, windowHeight * 0.7 * 298 / 490, windowHeight * 217 / 700, 226, 84, 126, 50 * L_Scale, 3, 3);
+  grasses.push(12, windowHeight * 0.7 * 300 / 490, windowHeight * 220 / 700, 144, 62, 91, 45 * L_Scale, 2, 3);
+  grasses.push(16, windowHeight * 0.7 * 298 / 490, windowHeight * 217 / 700, 226, 84, 126, 50 * L_Scale, 3, 3);
 }
 
 function generateRandomPoints(h) {
@@ -67,18 +67,18 @@ function windowResized() {
 
 // Define the Curve object constructor
 function Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX, endY, r, g, b, size, rotate, round) {
-  this.startX = startX; 
-  this.startY = startY; 
-  this.controlX1 = controlX1; 
-  this.controlY1 = controlY1; 
-  this.controlX2 = controlX2; 
-  this.controlY2 = controlY2; 
-  this.endX = endX; 
-  this.endY = endY; 
-  this.r = r; 
-  this.g = g; 
-  this.b = b; 
-  this.size = size; 
+  this.startX = startX;
+  this.startY = startY;
+  this.controlX1 = controlX1;
+  this.controlY1 = controlY1;
+  this.controlX2 = controlX2;
+  this.controlY2 = controlY2;
+  this.endX = endX;
+  this.endY = endY;
+  this.r = r;
+  this.g = g;
+  this.b = b;
+  this.size = size;
   this.rotate = rotate;
   this.round = round;
 
@@ -103,7 +103,7 @@ function Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX,
   //check mouse pos
   this.contains = function (mx, my) {
     let d = dist(mx, my, this.startX, this.startY);
-    return d < 30;
+    return d < 50;
   };
 
 
@@ -126,10 +126,38 @@ function Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX,
 
 
 
+function Grass(curves) {
+  this.curves = curves;
+
+  this.display = function () {
+    for (let i = 0; i < this.curves.length; i++) {
+      this.curves[i].display();
+    }
+
+  };
+
+  this.contains = function (mx, my) {
+    for (let i = 0; i < this.curves.length; i++) {
+      if (this.curves[i].contains(mx, my)) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  this.update = function (dx, dy) {
+    for (let i = 0; i < this.curves.length; i++) {
+      this.curves[i].update(dx, dy);
+    }
+  };
+}
 
 
-function generateCurves(n, startX, startY, r, g, b, size, rotate, round) {
+
+
+function generateGrass(n, startX, startY, r, g, b, size, rotate, round) {
   let angleStep = round / n;
+  let curves = [];
   for (let i = 0; i < n; i++) {
     let angle1 = angleStep * i;
     let angle2 = angleStep * (i + rotate);
@@ -141,6 +169,7 @@ function generateCurves(n, startX, startY, r, g, b, size, rotate, round) {
     let endY = startY + sin(angle2) * size * 2;
     grasses.push(new Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX, endY, r, g, b, size, rotate, round));
   }
+  return new Grass(curves);
 }
 
 
@@ -167,8 +196,8 @@ function mousePressed() {
   for (let i = 0; i < grasses.length; i++) {
     if (grasses[i].contains(mouseX, mouseY)) {
       selectedCurve = grasses[i];
-      offsetX = mouseX - grasses[i].startX;
-      offsetY = mouseY - grasses[i].startY;
+      offsetX = mouseX;
+      offsetY = mouseY;
       break;
     }
   }
@@ -181,7 +210,11 @@ function mousePressed() {
 
 function mouseDragged() {
   if (selectedCurve != null) {
-    selectedCurve.update(mouseX - offsetX, mouseY - offsetY);
+    let dx = mouseX - offsetX;
+    let dy = MouseY - offsetY;
+    selectedGrass.update(dx, dy);
+    offsetX = mouseX;
+    offsetY = mouseY;
   }
 }
 
