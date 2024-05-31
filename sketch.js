@@ -14,6 +14,11 @@ let darkRedPoints = [];
 function setup() {
   createCanvas(0.7 * windowHeight, windowHeight);
   generateRandomPoints(windowHeight);
+
+  // grass
+  let L_Scale = windowHeight / 700;
+  generateCurves(12, windowHeight * 0.7 * 300 / 490, windowHeight * 220 / 700, 144, 62, 91, 45 * L_Scale, 2, 3);
+  generateCurves(16, windowHeight * 0.7 * 298 / 490, windowHeight * 217 / 700, 226, 84, 126, 50 * L_Scale, 3, 3);
 }
 
 function generateRandomPoints(h) {
@@ -38,39 +43,14 @@ function generateRandomPoints(h) {
 
 function draw() {
   background(255, 200, 34);
-  curves = [];
 
-  let L_Scale = windowHeight / 700;
+  drawPoints(blackPoints, 0);
 
-  //grass 
-  generateCurves(12, windowHeight * 0.7 * 300 / 490, windowHeight * 220 / 700, 144, 62, 91, 45 * L_Scale, 2, 3);
-  generateCurves(16, windowHeight * 0.7 * 298 / 490, windowHeight * 217 / 700, 226, 84, 126, 50 * L_Scale, 3, 3);
+  drawPoints(pinkPoints, color(255, 105, 180));
 
-  // Draw black dots
-  fill(0);
-  noStroke();
-  for (let i = 0; i < blackPoints.length; i++) {
-    ellipse(blackPoints[i].x, windowHeight * blackPoints[i].y, 5, 5);
-  }
+  drawPoints(darkRedPoints, color(139, 0, 0));
 
-  // Draw pink dots
-  fill(255, 105, 180); // Pink color
-  noStroke();
-  for (let i = 0; i < pinkPoints.length; i++) {
-    ellipse(pinkPoints[i].x, pinkPoints[i].y, 5, 5);
-  }
-
-  // Draw dark red dots
-  fill(139, 0, 0); // Dark red color
-  noStroke();
-  for (let i = 0; i < darkRedPoints.length; i++) {
-    ellipse(darkRedPoints[i].x, darkRedPoints[i].y, 5, 5);
-  }
-
-  //Draw the curves
-  for (let i = 0; i < curves.length; i++) {
-    curves[i].display();
-  }
+  displayCurves(curves);
 
 }
 
@@ -102,6 +82,9 @@ function Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX,
   this.rotate = rotate; // Distortion coefficient of the curve
   this.round = round; // radian 
 
+
+
+
   // Display method to draw the curve
   this.display = function () {
     stroke(this.r, this.g, this.b);
@@ -113,11 +96,19 @@ function Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX,
     endShape();
   };
 
+
+
+
+
   //check mouse pos
   this.contains = function (mx, my) {
     let d = dist(mx, my, this.startX, this.startY);
     return d < 30;
   };
+
+
+
+
 
   this.update = function (mx, my) {
     let dx = mx - this.startX;
@@ -132,6 +123,10 @@ function Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX,
     this.endY += dy;
   };
 }
+
+
+
+
 
 function generateCurves(n, startX, startY, r, g, b, size, rotate, round) {
   let angleStep = round / n;
@@ -149,11 +144,24 @@ function generateCurves(n, startX, startY, r, g, b, size, rotate, round) {
 }
 
 
+function drawPoints(points, fillColor) {
+  fill(fillColor);
+  noStroke();
+  for (let i = 0; i < points.length; i++) {
+    ellipse(points[i].x, points[i].y, 5, 5);
+  }
+}
+
+
 function displayCurves(curveArray) {
   for (let i = 0; i < curveArray.length; i++) {
     curveArray[i].display();
   }
 }
+
+
+
+
 
 function mousePressed() {
   for (let i = 0; i < curves.length; i++) {
@@ -166,11 +174,21 @@ function mousePressed() {
   }
 }
 
+
+
+
+
+
 function mouseDragged() {
   if (selectedCurve != null) {
     selectedCurve.update(mouseX - offsetX, mouseY - offsetY);
   }
 }
+
+
+
+
+
 
 function mouseReleased() {
   selectedCurve = null;
