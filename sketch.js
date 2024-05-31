@@ -2,7 +2,7 @@ let curves = []; //create the array curves to store the curve object
 
 
 let selectedCurve = null;
-let offsetX,offsetY;
+let offsetX, offsetY;
 
 let blackPoints = [];
 let pinkPoints = [];
@@ -17,19 +17,19 @@ function setup() {
 }
 
 function generateRandomPoints(h) {
-  for (let i = 0; i < 2 * h; i++) { 
+  for (let i = 0; i < 2 * h; i++) {
     let x = random(0.7 * h);
     let y = random(h);
     blackPoints.push({ x: x, y: y });
   }
-  
-  for (let i = 0; i < h; i++) { 
+
+  for (let i = 0; i < h; i++) {
     let x = random(0.7 * h);
     let y = random(h);
     pinkPoints.push({ x: x, y: y });
   }
-  
-  for (let i = 0; i < 0.5 * h; i++) { 
+
+  for (let i = 0; i < 0.5 * h; i++) {
     let x = random(0.7 * h);
     let y = random(h);
     darkRedPoints.push({ x: x, y: y });
@@ -40,7 +40,7 @@ function draw() {
   background(255, 200, 34);
   curves = [];
 
-  let L_Scale = windowHeight/700;
+  let L_Scale = windowHeight / 700;
 
   //grass 
   generateCurves(12, windowHeight * 0.7 * 300 / 490, windowHeight * 220 / 700, 144, 62, 91, 45 * L_Scale, 2, 3);
@@ -50,23 +50,23 @@ function draw() {
   fill(0);
   noStroke();
   for (let i = 0; i < blackPoints.length; i++) {
-    ellipse(blackPoints[i].x, windowHeight*blackPoints[i].y, 5, 5);
+    ellipse(blackPoints[i].x, windowHeight * blackPoints[i].y, 5, 5);
   }
-  
+
   // Draw pink dots
   fill(255, 105, 180); // Pink color
   noStroke();
   for (let i = 0; i < pinkPoints.length; i++) {
-    ellipse(pinkPoints[i].x, pinkPoints[i].y, 5, 5); 
+    ellipse(pinkPoints[i].x, pinkPoints[i].y, 5, 5);
   }
-  
+
   // Draw dark red dots
   fill(139, 0, 0); // Dark red color
   noStroke();
   for (let i = 0; i < darkRedPoints.length; i++) {
-    ellipse(darkRedPoints[i].x, darkRedPoints[i].y, 5, 5); 
+    ellipse(darkRedPoints[i].x, darkRedPoints[i].y, 5, 5);
   }
-  
+
   //Draw the curves
   for (let i = 0; i < curves.length; i++) {
     curves[i].display();
@@ -103,14 +103,33 @@ function Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX,
   this.round = round; // radian 
 
   // Display method to draw the curve
-  this.display = function() {
-    stroke(this.r, this.g, this.b); 
-    strokeWeight(4.5); 
-    noFill(); 
-    beginShape(); 
-    vertex(this.startX, this.startY); 
+  this.display = function () {
+    stroke(this.r, this.g, this.b);
+    strokeWeight(4.5);
+    noFill();
+    beginShape();
+    vertex(this.startX, this.startY);
     bezierVertex(this.controlX1, this.controlY1, this.controlX2, this.controlY2, this.endX, this.endY); // Draw the bezier curve
-    endShape(); 
+    endShape();
+  };
+
+  //check mouse pos
+  this.contains = function (mx, my) {
+    let d = dist(mx, my, this.startX, this.startY);
+    return d < 30;
+  };
+
+  this.update = function (mx, my) {
+    let dx = mx - this.startX;
+    let dy = my - this.startY;
+    this.startX += dx;
+    this.startY += dy;
+    this.controlX1 += dx;
+    this.controlY1 += dy;
+    this.controlX2 += dx;
+    this.controlY2 += dy;
+    this.endX += dx;
+    this.endY += dy;
   };
 }
 
