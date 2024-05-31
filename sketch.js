@@ -184,7 +184,9 @@ function displayGrasses(grassArray) {
 function mousePressed() {
   for (let i = 0; i < grasses.length; i++) {
     if (grasses[i].contains(mouseX, mouseY)) {
-      selectedGrass = grasses[i];
+      let newGrass = grasses[i].copy();
+      grasses.push(newGrass);
+      selectedGrass = newGrass;
       offsetX = mouseX;
       offsetY = mouseY;
       break;
