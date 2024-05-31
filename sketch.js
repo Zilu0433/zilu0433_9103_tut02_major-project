@@ -11,22 +11,22 @@ function setup() {
 
 // use the variable h to make sure the point scale with the window
 function generateRandomPoints(h) {
-  // Generate fixed black points
-  for (let i = 0; i < 2*h; i++) { // Adjust the number of dots as needed
+  // Generate black points
+  for (let i = 0; i < 2*h; i++) { 
     let x = random(0.7*h);
     let y = random(h);
     blackPoints.push({ x: x, y: y });
   }
   
-  // Generate fixed pink points
-  for (let i = 0; i < h; i++) { // Adjust the number of dots as needed
+  // Generate pink points
+  for (let i = 0; i < h; i++) { 
     let x = random(0.7*h);
     let y = random(h);
     pinkPoints.push({ x: x, y: y });
   }
   
-  // Generate fixed dark red points
-  for (let i = 0; i < 0.5*h; i++) { // Adjust the number of dots as needed
+  // Generate dark red points
+  for (let i = 0; i < 0.5*h; i++) { 
     let x = random(0.7*h);
     let y = random(h);
     darkRedPoints.push({ x: x, y: y });
@@ -95,21 +95,21 @@ function draw() {
   fill(0);
   noStroke();
   for (let i = 0; i < blackPoints.length; i++) {
-    ellipse(blackPoints[i].x, windowHeight*blackPoints[i].y, 5, 5); // Adjust the size of the dots as needed
+    ellipse(blackPoints[i].x, windowHeight*blackPoints[i].y, 5, 5);
   }
   
   // Draw fixed pink dots
   fill(255, 105, 180); // Pink color
   noStroke();
   for (let i = 0; i < pinkPoints.length; i++) {
-    ellipse(pinkPoints[i].x, pinkPoints[i].y, 5, 5); // Adjust the size of the dots as needed
+    ellipse(pinkPoints[i].x, pinkPoints[i].y, 5, 5); 
   }
   
   // Draw fixed dark red dots
   fill(139, 0, 0); // Dark red color
   noStroke();
   for (let i = 0; i < darkRedPoints.length; i++) {
-    ellipse(darkRedPoints[i].x, darkRedPoints[i].y, 5, 5); // Adjust the size of the dots as needed
+    ellipse(darkRedPoints[i].x, darkRedPoints[i].y, 5, 5); 
   }
   
   //Draw the curves
