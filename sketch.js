@@ -67,20 +67,20 @@ function windowResized() {
 
 // Define the Curve object constructor
 function Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX, endY, r, g, b, size, rotate, round) {
-  this.startX = startX; // Starting X coordinate of the curve
-  this.startY = startY; // Starting Y coordinate of the curve
-  this.controlX1 = controlX1; // The coordinates of the first X control point.
-  this.controlY1 = controlY1; // The coordinates of the first Y control point.
-  this.controlX2 = controlX2; // The coordinates of the second X control point.
-  this.controlY2 = controlY2; // The coordinates of the second Y control point.
-  this.endX = endX; // Ending X coordinate of the curve
-  this.endY = endY; // Ending Y coordinate of the curve
-  this.r = r; // Red 
-  this.g = g; // Green 
-  this.b = b; // Blue 
-  this.size = size; // length of the curve
-  this.rotate = rotate; // Distortion coefficient of the curve
-  this.round = round; // radian 
+  this.startX = startX; 
+  this.startY = startY; 
+  this.controlX1 = controlX1; 
+  this.controlY1 = controlY1; 
+  this.controlX2 = controlX2; 
+  this.controlY2 = controlY2; 
+  this.endX = endX; 
+  this.endY = endY; 
+  this.r = r; 
+  this.g = g; 
+  this.b = b; 
+  this.size = size; 
+  this.rotate = rotate;
+  this.round = round;
 
 
 
