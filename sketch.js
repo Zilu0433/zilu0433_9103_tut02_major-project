@@ -3,31 +3,29 @@ let blackPoints = [];
 let pinkPoints = [];
 let darkRedPoints = [];
 
+
+
+//set canvas size
 function setup() {
-  //createCanvas(490,700);
-  createCanvas(0.7*windowHeight, windowHeight);
+  createCanvas(0.7 * windowHeight, windowHeight);
   generateRandomPoints(windowHeight);
 }
 
-// use the variable h to make sure the point scale with the window
 function generateRandomPoints(h) {
-  // Generate black points
-  for (let i = 0; i < 2*h; i++) { 
-    let x = random(0.7*h);
+  for (let i = 0; i < 2 * h; i++) { 
+    let x = random(0.7 * h);
     let y = random(h);
     blackPoints.push({ x: x, y: y });
   }
   
-  // Generate pink points
   for (let i = 0; i < h; i++) { 
-    let x = random(0.7*h);
+    let x = random(0.7 * h);
     let y = random(h);
     pinkPoints.push({ x: x, y: y });
   }
   
-  // Generate dark red points
-  for (let i = 0; i < 0.5*h; i++) { 
-    let x = random(0.7*h);
+  for (let i = 0; i < 0.5 * h; i++) { 
+    let x = random(0.7 * h);
     let y = random(h);
     darkRedPoints.push({ x: x, y: y });
   }
