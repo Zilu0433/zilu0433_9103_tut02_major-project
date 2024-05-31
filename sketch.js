@@ -167,7 +167,7 @@ function generateGrass(n, startX, startY, r, g, b, size, rotate, round) {
     let controlY2 = startY + sin(angle2) * size;
     let endX = startX + cos(angle2) * size * 2;
     let endY = startY + sin(angle2) * size * 2;
-    grasses.push(new Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX, endY, r, g, b, size, rotate, round));
+    curves.push(new Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX, endY, r, g, b, size, rotate, round));
   }
   return new Grass(curves);
 }
@@ -182,9 +182,9 @@ function drawPoints(points, fillColor) {
 }
 
 
-function displayCurves(curveArray) {
-  for (let i = 0; i < curveArray.length; i++) {
-    curveArray[i].display();
+function displayCurves(grassArray) {
+  for (let i = 0; i < grassArray.length; i++) {
+    grassArray[i].display();
   }
 }
 
@@ -195,7 +195,7 @@ function displayCurves(curveArray) {
 function mousePressed() {
   for (let i = 0; i < grasses.length; i++) {
     if (grasses[i].contains(mouseX, mouseY)) {
-      selectedCurve = grasses[i];
+      selectedGrass = grasses[i];
       offsetX = mouseX;
       offsetY = mouseY;
       break;
@@ -209,9 +209,9 @@ function mousePressed() {
 
 
 function mouseDragged() {
-  if (selectedCurve != null) {
+  if (selectedGrass != null) {
     let dx = mouseX - offsetX;
-    let dy = MouseY - offsetY;
+    let dy = mouseY - offsetY;
     selectedGrass.update(dx, dy);
     offsetX = mouseX;
     offsetY = mouseY;
