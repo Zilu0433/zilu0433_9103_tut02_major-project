@@ -1,14 +1,15 @@
 let curves = []; //create the array curves to store the curve object 
 let blackPoints = [];
+let pinkPoints = [];
+let darkRedPoints = [];
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  //createCanvas(490,700);
+  createCanvas(0.7*windowHeight, windowHeight);
+  generateRandomPoints(windowHeight);
+}
 
-  // Generate fixed points
-  for (let i = 0; i < 1000; i++) { // Adjust the number of dots as needed
-    let x = random(width);
-    let y = random(height);
-    points.push({ x: x, y: y });
+// use the variable h to make sure the point scale with the window
 function generateRandomPoints(h) {
   // Generate fixed black points
   for (let i = 0; i < 2*h; i++) { // Adjust the number of dots as needed
