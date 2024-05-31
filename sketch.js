@@ -1,4 +1,6 @@
 let grasses = [];
+
+
 let selectedGrass = null;
 let offsetX, offsetY;
 
@@ -6,18 +8,18 @@ let blackPoints = [];
 let pinkPoints = [];
 let darkRedPoints = [];
 
-
 function setup() {
   createCanvas(0.7 * windowHeight, windowHeight);
   generateRandomPoints(windowHeight);
 
   //grass
   let L_Scale = windowHeight / 700;
-  let grass1 = generateGrass(12, windowHeight * 0.7 * 300 / 490, windowHeight * 220 / 700, 144, 62, 91, 45 * L_Scale, 2, 3));
-  let grass2 = generateGrass(16, windowHeight * 0.7 * 298 / 490, windowHeight * 217 / 700, 226, 84, 126, 50 * L_Scale, 3, 3));
-  let combinedGrass = combinedGrass(grass1, grass2);
-  grass1.push(combinedGrass);
+  let grass1 = generateGrass(12, windowHeight * 0.7 * 300 / 490, windowHeight * 220 / 700, 144, 62, 91, 45 * L_Scale, 2, 3);
+  let grass2 = generateGrass(16, windowHeight * 0.7 * 298 / 490, windowHeight * 217 / 700, 226, 84, 126, 50 * L_Scale, 3, 3);
+  let combinedGrass = combineGrasses(grass1, grass2);
+  grasses.push(combinedGrass);
 }
+
 
 function generateRandomPoints(h) {
   for (let i = 0; i < 2 * h; i++) {
@@ -39,6 +41,12 @@ function generateRandomPoints(h) {
   }
 }
 
+
+
+
+
+
+
 function draw() {
   background(255, 200, 34);
 
@@ -51,6 +59,8 @@ function draw() {
   displayGrasses(grasses);
 }
 
+
+
 function windowResized() {
   resizeCanvas(0.7 * windowHeight, windowHeight);
   redraw();
@@ -59,6 +69,7 @@ function windowResized() {
   darkRedPoints = [];
   generateRandomPoints(windowHeight);
 }
+
 
 
 function Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX, endY, r, g, b, size, rotate, round) {
@@ -76,7 +87,6 @@ function Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX,
   this.size = size;
   this.rotate = rotate;
   this.round = round;
-
 
   this.display = function () {
     stroke(this.r, this.g, this.b);
@@ -107,8 +117,13 @@ function Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX,
   this.copy = function () {
     return new Curve(this.startX, this.startY, this.controlX1, this.controlY1, this.controlX2, this.controlY2, this.endX, this.endY, this.r, this.g, this.b, this.size, this.rotate, this.round);
   };
-
 }
+
+
+
+
+
+
 
 function Grass(curves) {
   this.curves = curves;
@@ -141,8 +156,12 @@ function Grass(curves) {
     }
     return new Grass(newCurves);
   };
-
 }
+
+
+
+
+
 
 function generateGrass(n, startX, startY, r, g, b, size, rotate, round) {
   let angleStep = round / n;
@@ -181,11 +200,15 @@ function displayGrasses(grassArray) {
 }
 
 
+
+
+
+
 function mousePressed() {
   for (let i = 0; i < grasses.length; i++) {
     if (grasses[i].contains(mouseX, mouseY)) {
-      let newGrass = grasses[i].copy();
-      grasses.push(newGrass);
+      let newGrass = grasses[i].copy(); 
+      grasses.push(newGrass); 
       selectedGrass = newGrass;
       offsetX = mouseX;
       offsetY = mouseY;
