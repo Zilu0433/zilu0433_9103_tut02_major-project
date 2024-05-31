@@ -1,4 +1,4 @@
-let curves = []; //create the array curves to store the curve object 
+let grasses = []; //create the array grasses to store the curve object 
 
 
 let selectedCurve = null;
@@ -50,7 +50,7 @@ function draw() {
 
   drawPoints(darkRedPoints, color(139, 0, 0));
 
-  displayCurves(curves);
+  displayCurves(grasses);
 
 }
 
@@ -139,7 +139,7 @@ function generateCurves(n, startX, startY, r, g, b, size, rotate, round) {
     let controlY2 = startY + sin(angle2) * size;
     let endX = startX + cos(angle2) * size * 2;
     let endY = startY + sin(angle2) * size * 2;
-    curves.push(new Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX, endY, r, g, b, size, rotate, round));
+    grasses.push(new Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX, endY, r, g, b, size, rotate, round));
   }
 }
 
@@ -164,11 +164,11 @@ function displayCurves(curveArray) {
 
 
 function mousePressed() {
-  for (let i = 0; i < curves.length; i++) {
-    if (curves[i].contains(mouseX, mouseY)) {
-      selectedCurve = curves[i];
-      offsetX = mouseX - curves[i].startX;
-      offsetY = mouseY - curves[i].startY;
+  for (let i = 0; i < grasses.length; i++) {
+    if (grasses[i].contains(mouseX, mouseY)) {
+      selectedCurve = grasses[i];
+      offsetX = mouseX - grasses[i].startX;
+      offsetY = mouseY - grasses[i].startY;
       break;
     }
   }
