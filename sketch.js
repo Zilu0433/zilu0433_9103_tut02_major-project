@@ -1,4 +1,9 @@
 let curves = []; //create the array curves to store the curve object 
+
+
+let selectedCurve = null;
+let offsetX,offsetY;
+
 let blackPoints = [];
 let pinkPoints = [];
 let darkRedPoints = [];
