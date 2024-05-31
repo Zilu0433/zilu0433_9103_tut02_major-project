@@ -71,9 +71,8 @@ function draw() {
 
 
 function windowResized() {
-  resizeCanvas(0.7*windowHeight, windowHeight);
-  redraw(); // Redraw the canvas after resizing
-  //reset the blackPoints, pinkPoints, darkRedPoints every time we run
+  resizeCanvas(0.7 * windowHeight, windowHeight);
+  redraw();
   blackPoints = [];
   pinkPoints = [];
   darkRedPoints = [];
@@ -110,33 +109,24 @@ function Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX,
   };
 }
 
-// Function to generate curves
-function generateCurves(n, start_x, start_y, color_r, color_g, color_b, s, rotate_ratio, rr) {
-  let size = s; // the length of the curves
-  let angleStep = rr / n; // Calculate the angle step based on the total number of curves and the radian of the circle
-  // Loop to generate each curve
+function generateCurves(n, startX, startY, r, g, b, size, rotate, round) {
+  let angleStep = round / n;
   for (let i = 0; i < n; i++) {
-    let startX = start_x; // Set the starting X coordinate
-    let startY = start_y; // Set the starting Y coordinate
-    let angle1 = angleStep * i; // Calculate the first angle based on the current iteration
-    let angle2 = angleStep * (i + rotate_ratio); // Calculate the second angle based on the current iteration and rotation ratio
-    // Calculate the control points and end points of the Bezier curve
-    let controlX1 = startX + cos(angle1) * size; 
-    let controlY1 = startY + sin(angle1) * size; 
-    let controlX2 = startX + cos(angle2) * size; 
-    let controlY2 = startY + sin(angle2) * size; 
-    let endX = startX + cos(angle2) * size * 2; 
-    let endY = startY + sin(angle2) * size * 2; 
-    // Assign the color values to the curve
-    let r = color_r; 
-    let g = color_g; 
-    let b = color_b; 
-    // Store the rotation Distortion coefficient and Radian value for the curve
-    let rotate = rotate_ratio; 
-    let round = rr; 
-    // Create a new Curve object and push it to the curves array
-    let curve = new Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX, endY, r, g, b, size, rotate, round);
-    curves.push(curve);
+    let angle1 = angleStep * i;
+    let angle2 = angleStep * (i + rotate);
+    let controlX1 = startX + cos(angle1) * size;
+    let controlY1 = startY + sin(angle1) * size;
+    let controlX2 = startX + cos(angle2) * size;
+    let controlY2 = startY + sin(angle2) * size;
+    let endX = startX + cos(angle2) * size * 2;
+    let endY = startY + sin(angle2) * size * 2;
+    curves.push(new Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX, endY, r, g, b, size, rotate, round));
   }
+}
 
+
+function displayCurves(curveArray) {
+  for (let i = 0; i < curveArray.length; i++) {
+    curveArray[i].display();
+  }
 }
