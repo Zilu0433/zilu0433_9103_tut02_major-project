@@ -1,7 +1,5 @@
-let grasses = []; //create the array grasses to store the curve object 
-
-
-let selectedCurve = null;
+let grasses = [];
+let selectedGrass = null;
 let offsetX, offsetY;
 
 let blackPoints = [];
@@ -9,16 +7,14 @@ let pinkPoints = [];
 let darkRedPoints = [];
 
 
-
-//set canvas size
 function setup() {
   createCanvas(0.7 * windowHeight, windowHeight);
   generateRandomPoints(windowHeight);
 
-  // grass
+  //grass
   let L_Scale = windowHeight / 700;
-  grasses.push(12, windowHeight * 0.7 * 300 / 490, windowHeight * 220 / 700, 144, 62, 91, 45 * L_Scale, 2, 3);
-  grasses.push(16, windowHeight * 0.7 * 298 / 490, windowHeight * 217 / 700, 226, 84, 126, 50 * L_Scale, 3, 3);
+  grasses.push(generateGrass(12, windowHeight * 0.7 * 300 / 490, windowHeight * 220 / 700, 144, 62, 91, 45 * L_Scale, 2, 3));
+  grasses.push(generateGrass(16, windowHeight * 0.7 * 298 / 490, windowHeight * 217 / 700, 226, 84, 126, 50 * L_Scale, 3, 3));
 }
 
 function generateRandomPoints(h) {
@@ -34,7 +30,7 @@ function generateRandomPoints(h) {
     pinkPoints.push({ x: x, y: y });
   }
 
-  for (let i = 0; i < 0.5 * h; i++) {
+  for (let i = 0.5 * h; i > 0; i--) {
     let x = random(0.7 * h);
     let y = random(h);
     darkRedPoints.push({ x: x, y: y });
@@ -50,10 +46,8 @@ function draw() {
 
   drawPoints(darkRedPoints, color(139, 0, 0));
 
-  displayCurves(grasses);
-
+  displayGrasses(grasses);
 }
-
 
 function windowResized() {
   resizeCanvas(0.7 * windowHeight, windowHeight);
@@ -65,7 +59,6 @@ function windowResized() {
 }
 
 
-// Define the Curve object constructor
 function Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX, endY, r, g, b, size, rotate, round) {
   this.startX = startX;
   this.startY = startY;
@@ -83,36 +76,22 @@ function Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX,
   this.round = round;
 
 
-
-
-  // Display method to draw the curve
   this.display = function () {
     stroke(this.r, this.g, this.b);
     strokeWeight(4.5);
     noFill();
     beginShape();
     vertex(this.startX, this.startY);
-    bezierVertex(this.controlX1, this.controlY1, this.controlX2, this.controlY2, this.endX, this.endY); // Draw the bezier curve
+    bezierVertex(this.controlX1, this.controlY1, this.controlX2, this.controlY2, this.endX, this.endY);
     endShape();
   };
 
-
-
-
-
-  //check mouse pos
   this.contains = function (mx, my) {
     let d = dist(mx, my, this.startX, this.startY);
     return d < 50;
   };
 
-
-
-
-
-  this.update = function (mx, my) {
-    let dx = mx - this.startX;
-    let dy = my - this.startY;
+  this.update = function (dx, dy) {
     this.startX += dx;
     this.startY += dy;
     this.controlX1 += dx;
@@ -124,8 +103,6 @@ function Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX,
   };
 }
 
-
-
 function Grass(curves) {
   this.curves = curves;
 
@@ -133,7 +110,6 @@ function Grass(curves) {
     for (let i = 0; i < this.curves.length; i++) {
       this.curves[i].display();
     }
-
   };
 
   this.contains = function (mx, my) {
@@ -152,9 +128,6 @@ function Grass(curves) {
   };
 }
 
-
-
-
 function generateGrass(n, startX, startY, r, g, b, size, rotate, round) {
   let angleStep = round / n;
   let curves = [];
@@ -172,7 +145,6 @@ function generateGrass(n, startX, startY, r, g, b, size, rotate, round) {
   return new Grass(curves);
 }
 
-
 function drawPoints(points, fillColor) {
   fill(fillColor);
   noStroke();
@@ -181,15 +153,11 @@ function drawPoints(points, fillColor) {
   }
 }
 
-
-function displayCurves(grassArray) {
+function displayGrasses(grassArray) {
   for (let i = 0; i < grassArray.length; i++) {
     grassArray[i].display();
   }
 }
-
-
-
 
 
 function mousePressed() {
@@ -203,11 +171,6 @@ function mousePressed() {
   }
 }
 
-
-
-
-
-
 function mouseDragged() {
   if (selectedGrass != null) {
     let dx = mouseX - offsetX;
@@ -218,11 +181,6 @@ function mouseDragged() {
   }
 }
 
-
-
-
-
-
 function mouseReleased() {
-  selectedCurve = null;
+  selectedGrass = null;
 }
