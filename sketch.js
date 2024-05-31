@@ -154,3 +154,24 @@ function displayCurves(curveArray) {
     curveArray[i].display();
   }
 }
+
+function mousePressed() {
+  for (let i = 0; i < curves.length; i++) {
+    if (curves[i].contains(mouseX, mouseY)) {
+      selectedCurve = curves[i];
+      offsetX = mouseX - curves[i].startX;
+      offsetY = mouseY - curves[i].startY;
+      break;
+    }
+  }
+}
+
+function mouseDragged() {
+  if (selectedCurve != null) {
+    selectedCurve.update(mouseX - offsetX, mouseY - offsetY);
+  }
+}
+
+function mouseReleased() {
+  selectedCurve = null;
+}
