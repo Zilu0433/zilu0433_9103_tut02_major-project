@@ -12,7 +12,8 @@ function setup() {
   createCanvas(0.7 * windowHeight, windowHeight);
   generateRandomPoints(windowHeight);
 
-  //grass
+  //Generate two grasses using generateGrass, then combine them into one grass object using
+  //combineGrasses and add it to the grasses array.
   let L_Scale = windowHeight / 700;
   let grass1 = generateGrass(12, windowHeight * 0.7 * 300 / 490, windowHeight * 220 / 700, 144, 62, 91, 45 * L_Scale, 2, 3);
   let grass2 = generateGrass(16, windowHeight * 0.7 * 298 / 490, windowHeight * 217 / 700, 226, 84, 126, 50 * L_Scale, 3, 3);
@@ -100,7 +101,7 @@ function Curve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX,
 
   this.contains = function (mx, my) {
     let d = dist(mx, my, this.startX, this.startY);
-    return d < 50;
+    return d < 80;
   };
 
   this.update = function (dx, dy) {
@@ -203,7 +204,9 @@ function displayGrasses(grassArray) {
 
 
 
-
+//The mousePressed function checks if the mouse is clicking on a grass object
+//when the mouse is pressed. If so, a copy of the grass object is created and added to the grasses array,
+//selectedGrass is set to the new copy, and the mouse position is recorded.
 function mousePressed() {
   for (let i = 0; i < grasses.length; i++) {
     if (grasses[i].contains(mouseX, mouseY)) {
@@ -217,6 +220,9 @@ function mousePressed() {
   }
 }
 
+//The mouseDragged function updates the position 
+//of selectedGrass while the mouse is being dragged.
+
 function mouseDragged() {
   if (selectedGrass != null) {
     let dx = mouseX - offsetX;
@@ -227,6 +233,8 @@ function mouseDragged() {
   }
 }
 
+
+//The mouseReleased function deselects selectedGrass when the mouse is released.
 function mouseReleased() {
   selectedGrass = null;
 }
